@@ -81,7 +81,24 @@
       }
     }
 
-    for (const line of lines) {
+    for (let idx = 0; idx < lines.length; idx++) {
+      const line = lines[idx];
+
+      // fenced code block: capture everything up to the closing ``` as
+      // a single block, ignoring blank lines / headings inside it
+      if (/^\s*```/.test(line)) {
+        flush();
+        const codeLines = [line];
+        idx++;
+        while (idx < lines.length && !/^\s*```\s*$/.test(lines[idx])) {
+          codeLines.push(lines[idx]);
+          idx++;
+        }
+        if (idx < lines.length) codeLines.push(lines[idx]); // closing fence
+        blocks.push(codeLines.join("\n"));
+        continue;
+      }
+
       const headingMatch = /^(#{1,6})\s+(.*)$/.exec(line);
       if (headingMatch) {
         flush();
@@ -172,6 +189,11 @@
   function blockHtml(block, inReferences) {
     const lines = block.split("\n");
 
+    // fenced code block ( ```lang ... ``` )
+    if (isCodeBlock(lines)) {
+      return codeBlockHtml(lines);
+    }
+
     // table (GFM: fila con | seguida de fila separadora ---|---)
     if (isTableBlock(lines)) {
       return tableBlockHtml(lines);
@@ -209,6 +231,30 @@
       return `<p class="apa-ref">${inline(text)}</p>\n`;
     }
     return `<p class="apa-p">${inline(text)}</p>\n`;
+  }
+
+  // ---------- fenced code blocks ----------
+
+  function isCodeBlock(lines) {
+    return lines.length >= 1 && /^\s*```/.test(lines[0]);
+  }
+
+  function codeBlockHtml(lines) {
+    const langMatch = /^\s*```\s*([\w+-]*)\s*$/.exec(lines[0]);
+    const lang = langMatch ? langMatch[1] : "";
+
+    let content = lines.slice(1);
+    if (content.length && /^\s*```\s*$/.test(content[content.length - 1])) {
+      content = content.slice(0, -1);
+    }
+
+    const codeText = escapeHtml(content.join("\n"));
+    const langClass = lang ? ` class="lang-${escapeHtml(lang)}"` : "";
+
+    return `
+      <div class="apa-code-block">
+        <pre class="apa-code"><code${langClass}>${codeText}</code></pre>
+      </div>\n`;
   }
 
   // ---------- tables (GFM + convención "Tabla:" / "Nota:") ----------
@@ -406,6 +452,8 @@
         .apa-table tbody tr { border-bottom: none; }
         .apa-table tbody tr:last-child { border-bottom: 1.5pt solid #000; }
         .apa-table-note { font-size: 10.5pt; text-indent: 0; margin-top: 6pt; }
+        .apa-code-block { margin-top: 24pt; }
+        pre.apa-code { font-family: 'Courier New', Consolas, monospace; font-size: 10pt; line-height: 140%; text-align: left; text-indent: 0; border: 1pt solid #000; padding: 10pt 12pt; margin: 0; white-space: pre-wrap; }
       </style>
       </head>
       <body>
@@ -443,6 +491,15 @@ Se revisaron 12 estudios publicados entre 2015 y 2024 en bases de datos indexada
 #### Criterios de inclusión
 
 Solo se consideraron estudios con muestras mayores a 100 participantes.
+
+\`\`\`
+enable
+configure terminal
+hostname S1
+interface vlan1
+ip address 192.168.1.11 255.255.255.0
+no shutdown
+\`\`\`
 
 | Estudio | Muestra | Horas de sueño |
 |---------|---------|-----------------|

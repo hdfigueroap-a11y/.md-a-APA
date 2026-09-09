@@ -394,6 +394,27 @@ html, body {
   line-height: 1.4;
 }
 
+/* fenced code blocks — monoespaciado, sin sangría, con caja */
+.apa-code-block {
+  margin: 24pt 0 0;
+}
+pre.apa-code {
+  font-family: 'Courier New', Consolas, 'Liberation Mono', monospace;
+  font-size: 10pt;
+  line-height: 1.4;
+  text-align: left;
+  text-indent: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  border: 1px solid #000;
+  padding: 10pt 12pt;
+  margin: 0;
+  background: #fff;
+}
+pre.apa-code code {
+  font-family: inherit;
+}
+
 /* ---------- rules note ---------- */
 
 .rules-note {

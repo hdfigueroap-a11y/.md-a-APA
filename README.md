@@ -15,6 +15,7 @@ Aplicación web (100% en el navegador, sin backend) que convierte un archivo `.m
   - Citas de 40 palabras o más se convierten automáticamente en cita en bloque (sin comillas, con sangría); las más cortas quedan en línea con comillas
   - Una sección `## Referencias` (o `References` / `Bibliografía`) activa el modo de sangría francesa: cada párrafo separado por una línea en blanco se trata como una referencia independiente
   - Tablas en formato Markdown (GFM, con `|`) convertidas a formato APA 7: numeradas automáticamente («Tabla 1», «Tabla 2»...), con título en cursiva y nota al pie, y solo bordes horizontales (nunca verticales), como pide el manual
+  - Bloques de código entre ` ``` ` (útil para configuraciones de dispositivos de red, scripts, comandos) renderizados en fuente monoespaciada dentro de una caja con borde, sin sangría de párrafo ni interlineado doble
 - Vista previa en vivo, estilo "hoja de papel"
 - Exportación a `.doc` (se abre directamente en Microsoft Word, conservando fuente, márgenes e interlineado) y a PDF vía impresión del navegador
 - Sin dependencias externas ni build step: es HTML + CSS + JS puro
@@ -72,9 +73,26 @@ Nota: Todas las máscaras son /24 salvo la interfaz Loopback0.
 
 `Tabla:` (o `Table:`) se convierte en el título en cursiva; `Nota:` (o `Note:`) se convierte en la nota al pie con el formato *Nota.* que exige APA 7. Las tablas se numeran automáticamente en el orden en que aparecen.
 
+## Bloques de código
+
+Envuelve el texto entre líneas ` ``` `, igual que en Markdown estándar (el identificador de lenguaje después de las primeras comillas, como ` ```bash `, es opcional y se ignora visualmente):
+
+````markdown
+```
+enable
+configure terminal
+hostname S1
+interface vlan1
+ip address 192.168.1.11 255.255.255.0
+no shutdown
+```
+````
+
+El contenido se muestra en fuente monoespaciada, sin sangría de párrafo, con interlineado sencillo y dentro de una caja con borde — el formato recomendado por APA 7 para muestras de código. Las líneas en blanco dentro del bloque no cortan el bloque en varios párrafos.
+
 ## Limitaciones conocidas
 
-- El parser de Markdown es intencionalmente simple (encabezados, negrita, cursiva, código en línea, listas, citas, tablas y párrafos). No soporta imágenes ni enlaces con sintaxis `[texto](url)`.
+- El parser de Markdown es intencionalmente simple (encabezados, negrita, cursiva, código en línea y en bloque, listas, citas, tablas y párrafos). No soporta imágenes ni enlaces con sintaxis `[texto](url)`.
 - La numeración automática de página no se genera en la vista previa ni en el `.doc`; Word la agrega automáticamente al usar *Insertar → Número de página* tras abrir el archivo exportado.
 - Siempre revisa el resultado antes de entregar tu trabajo: esta herramienta automatiza el formato, no reemplaza la revisión de contenido ni de citas.
 
