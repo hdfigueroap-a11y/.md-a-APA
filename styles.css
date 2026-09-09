@@ -1,0 +1,405 @@
+/* ============================================================
+   APA7 — tema "escritorio editorial"
+   Paleta: papel bond frío, tinta casi negra, rojo de corrección
+   Tipografía: Source Serif 4 (manuscrito) + IBM Plex Mono (UI)
+   ============================================================ */
+
+@font-face {
+  font-family: 'sys-serif';
+  src: local('Source Serif 4'), local('Georgia');
+}
+
+:root {
+  --paper:      #F7F7F3;
+  --paper-deep: #EFEEE7;
+  --ink:        #1B1B18;
+  --ink-soft:   #4A4944;
+  --hairline:   #D9D7CC;
+  --red:        #A6321D;
+  --red-soft:   #C24A32;
+  --navy:       #2B3A55;
+  --navy-soft:  #5C6B85;
+  --sans: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+  --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper-deep);
+  color: var(--ink);
+  font-family: var(--sans);
+}
+
+/* ---------- masthead ---------- */
+
+.masthead {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 28px clamp(16px, 4vw, 48px) 20px;
+  border-bottom: 3px solid var(--ink);
+  background: var(--paper);
+}
+
+.masthead__mark {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 2.4rem;
+  color: var(--red);
+  line-height: 1;
+}
+
+.masthead__text h1 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 2px;
+  letter-spacing: 0.02em;
+}
+
+.masthead__text p {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- layout ---------- */
+
+.desk {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--hairline);
+}
+
+@media (max-width: 880px) {
+  .desk { grid-template-columns: 1fr; }
+}
+
+.pane {
+  background: var(--paper);
+  padding: clamp(16px, 3vw, 32px);
+  min-width: 0;
+}
+
+.pane__label {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--navy-soft);
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 8px;
+}
+
+/* ---------- metadata form ---------- */
+
+.meta-form__row {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.meta-form label {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.meta-form input[type="text"] {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  padding: 8px 10px;
+  border: 1px solid var(--hairline);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 2px;
+}
+
+.meta-form input[type="text"]:focus {
+  outline: 2px solid var(--navy);
+  outline-offset: 1px;
+  border-color: var(--navy);
+}
+
+.meta-form__row--radio {
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.meta-form__legend {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+
+/* ---------- toolbars / buttons ---------- */
+
+.input-toolbar, .output-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.ghost-btn, .file-btn, .primary-btn {
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  padding: 9px 14px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.ghost-btn:hover, .file-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.ghost-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.ghost-btn:disabled:hover {
+  background: transparent;
+  color: var(--ink);
+}
+
+.file-btn {
+  display: inline-flex;
+  align-items: center;
+}
+
+.primary-btn {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+  font-weight: 600;
+}
+.primary-btn:hover { background: var(--red-soft); border-color: var(--red-soft); }
+
+/* ---------- markdown textarea ---------- */
+
+.md-input {
+  width: 100%;
+  min-height: 360px;
+  resize: vertical;
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  padding: 16px;
+  border: 1px solid var(--hairline);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 2px;
+}
+
+.md-input:focus {
+  outline: 2px solid var(--navy);
+  outline-offset: 1px;
+}
+
+.input-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+#word-count {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- APA paper preview ---------- */
+
+.paper-scroll {
+  max-height: 78vh;
+  overflow-y: auto;
+  background: var(--paper-deep);
+  padding: 20px;
+  border: 1px solid var(--hairline);
+}
+
+.paper {
+  background: #fff;
+  color: #000;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto 24px;
+  padding: 56px 48px;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 12pt;
+  line-height: 2;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+  position: relative;
+}
+
+.paper--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  box-shadow: none;
+  border: 1px dashed var(--hairline);
+}
+
+.paper__hint {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  text-align: center;
+  line-height: 1.6;
+  max-width: 320px;
+}
+
+/* title page */
+.apa-titlepage {
+  min-height: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 100px;
+}
+.apa-titlepage .apa-title {
+  font-weight: 700;
+  margin-bottom: 24px;
+  max-width: 480px;
+}
+.apa-titlepage .apa-line { margin: 0; }
+.apa-titlepage .apa-spacer { height: 48px; }
+
+.apa-pagebreak {
+  border: none;
+  border-top: 1px dashed var(--hairline);
+  margin: 40px 0;
+}
+.apa-pagebreak::after {
+  content: "· · ·";
+  display: block;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  margin-top: -10px;
+  background: #fff;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 8px;
+}
+
+/* body headings — exact APA 7 levels */
+.apa-h1 { text-align: center; font-weight: 700; margin: 24px 0 0; }
+.apa-h2 { text-align: left; font-weight: 700; margin: 24px 0 0; }
+.apa-h3 { text-align: left; font-weight: 700; font-style: italic; margin: 24px 0 0; }
+.apa-h4 { margin: 24px 0 0; text-indent: 0.5in; font-weight: 700; }
+.apa-h4 .apa-run { font-weight: 400; }
+.apa-h5 { margin: 24px 0 0; text-indent: 0.5in; font-weight: 700; font-style: italic; }
+.apa-h5 .apa-run { font-weight: 400; font-style: normal; }
+
+.apa-p {
+  text-indent: 0.5in;
+  text-align: left;
+  margin: 0 0 0;
+}
+
+.apa-blockquote {
+  margin: 0 0 0 0.5in;
+  text-indent: 0;
+  text-align: left;
+}
+
+.apa-refs-title {
+  text-align: center;
+  font-weight: 700;
+  margin: 0 0 0;
+}
+
+.apa-ref {
+  text-indent: -0.5in;
+  margin-left: 0.5in;
+  text-align: left;
+}
+
+.apa-list {
+  margin: 0 0 0 0.75in;
+  padding: 0;
+}
+.apa-list li { margin: 0; }
+
+/* ---------- rules note ---------- */
+
+.rules-note {
+  margin-top: 16px;
+  font-size: 0.78rem;
+  border: 1px solid var(--hairline);
+  padding: 10px 14px;
+  background: var(--paper);
+}
+.rules-note summary {
+  cursor: pointer;
+  color: var(--navy);
+  font-weight: 600;
+}
+.rules-note ul {
+  margin: 10px 0 2px;
+  padding-left: 18px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+/* ---------- footer ---------- */
+
+.site-footer {
+  padding: 20px clamp(16px, 4vw, 48px) 40px;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background: var(--paper-deep);
+}
+.site-footer em { color: var(--ink); }
+
+/* ---------- print ---------- */
+
+@media print {
+  body * { visibility: hidden; }
+  #paper, #paper * { visibility: visible; }
+  #paper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: none;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 1in;
+  }
+  @page { margin: 1in; }
+  .apa-pagebreak { page-break-after: always; border: none; }
+  .apa-pagebreak::after { content: none; }
+  .apa-refs-title { page-break-before: always; }
+}

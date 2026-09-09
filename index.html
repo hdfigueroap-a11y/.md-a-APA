@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APA7 · Convertidor de Markdown a Normas APA 7ma edición</title>
+<meta name="description" content="Convierte texto o Markdown a formato APA 7ma edición: portada, encabezados, citas en bloque y referencias con sangría francesa. Exporta a Word o PDF.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead__mark" aria-hidden="true">§7</div>
+  <div class="masthead__text">
+    <h1>APA7</h1>
+    <p>De borrador en Markdown a manuscrito con Normas APA, 7ma edición</p>
+  </div>
+</header>
+
+<main class="desk">
+
+  <!-- LEFT: manuscript intake -->
+  <section class="pane pane--input" aria-label="Entrada de texto">
+    <div class="pane__label">01 · Manuscrito</div>
+
+    <form id="meta-form" class="meta-form">
+      <div class="meta-form__row">
+        <label for="f-title">Título del trabajo</label>
+        <input type="text" id="f-title" placeholder="Se toma del primer # si lo dejas vacío">
+      </div>
+      <div class="meta-form__row">
+        <label for="f-author">Autor(a)</label>
+        <input type="text" id="f-author" placeholder="Nombre y apellido">
+      </div>
+      <div class="meta-form__grid">
+        <div class="meta-form__row">
+          <label for="f-affil">Afiliación</label>
+          <input type="text" id="f-affil" placeholder="Universidad, facultad">
+        </div>
+        <div class="meta-form__row">
+          <label for="f-course">Curso</label>
+          <input type="text" id="f-course" placeholder="Código y nombre">
+        </div>
+      </div>
+      <div class="meta-form__grid">
+        <div class="meta-form__row">
+          <label for="f-instructor">Profesor(a)</label>
+          <input type="text" id="f-instructor" placeholder="Nombre del docente">
+        </div>
+        <div class="meta-form__row">
+          <label for="f-date">Fecha de entrega</label>
+          <input type="text" id="f-date" placeholder="9 de septiembre de 2026">
+        </div>
+      </div>
+      <div class="meta-form__row meta-form__row--radio">
+        <span class="meta-form__legend">Tipo de trabajo</span>
+        <label class="radio"><input type="radio" name="paper-type" value="student" checked> Estudiante</label>
+        <label class="radio"><input type="radio" name="paper-type" value="professional"> Profesional</label>
+      </div>
+    </form>
+
+    <div class="input-toolbar">
+      <label class="file-btn">
+        Subir .md
+        <input type="file" id="file-input" accept=".md,.markdown,.txt" hidden>
+      </label>
+      <button type="button" id="btn-sample" class="ghost-btn">Cargar ejemplo</button>
+      <button type="button" id="btn-clear" class="ghost-btn">Limpiar</button>
+    </div>
+
+    <textarea id="md-input" class="md-input" spellcheck="false"
+      placeholder="# Título de tu trabajo (va en la portada)
+
+## Encabezado de nivel 1
+
+Pega aquí tu texto o Markdown. ## es nivel 1 APA, ### nivel 2,
+#### nivel 3, y así hasta ######. Usa **negrita**, *cursiva*,
+líneas en blanco entre párrafos y una línea que empiece con >
+para citas textuales.
+
+## Referencias
+
+Cada referencia en un párrafo separado por una línea en blanco
+recibirá sangría francesa automáticamente."></textarea>
+
+    <div class="input-status">
+      <span id="word-count">0 palabras</span>
+      <button type="button" id="btn-convert" class="primary-btn">Convertir a APA 7 →</button>
+    </div>
+  </section>
+
+  <!-- RIGHT: APA preview -->
+  <section class="pane pane--output" aria-label="Vista previa en APA 7">
+    <div class="pane__label">02 · Manuscrito en APA 7</div>
+
+    <div class="output-toolbar">
+      <button type="button" id="btn-download-doc" class="ghost-btn" disabled>Descargar .doc</button>
+      <button type="button" id="btn-print" class="ghost-btn" disabled>Imprimir / PDF</button>
+    </div>
+
+    <div id="paper-scroll" class="paper-scroll">
+      <div id="paper" class="paper paper--empty">
+        <p class="paper__hint">Tu manuscrito formateado aparecerá aquí. Completa los datos de la izquierda, pega tu texto y pulsa «Convertir a APA 7».</p>
+      </div>
+    </div>
+
+    <details class="rules-note">
+      <summary>Qué reglas de APA 7 se aplican automáticamente</summary>
+      <ul>
+        <li>Portada con título, autor(a), afiliación, curso, docente y fecha (versión estudiante o profesional)</li>
+        <li>Interlineado doble y sangría de primera línea de 1.27 cm (0.5”) en párrafos</li>
+        <li>El primer # de tu texto se usa como título de portada; de ## a ###### generan los 5 niveles de encabezado APA</li>
+        <li>Citas textuales de 40+ palabras convertidas a cita en bloque, sin comillas</li>
+        <li>Sección de referencias con sangría francesa, título centrado y negrita</li>
+        <li>Márgenes de 1” en la exportación a Word/PDF</li>
+      </ul>
+    </details>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Formateo automático guiado por el <em>Publication Manual of the American Psychological Association</em>, 7ma edición. Revisa siempre el resultado antes de entregar tu trabajo.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
