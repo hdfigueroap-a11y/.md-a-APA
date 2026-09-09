@@ -108,6 +108,7 @@
     let refsHeadingLevel = null;
     let autoTitle = null;
     let sawFirstH1 = false;
+    apaTableCounter = 0; // reiniciar la numeración de tablas en cada conversión
 
     for (const block of blocks) {
       const headingMatch = /^(#{1,6})\s+(.*)$/.exec(block);
@@ -171,6 +172,11 @@
   function blockHtml(block, inReferences) {
     const lines = block.split("\n");
 
+    // table (GFM: fila con | seguida de fila separadora ---|---)
+    if (isTableBlock(lines)) {
+      return tableBlockHtml(lines);
+    }
+
     // blockquote
     if (lines.every((l) => /^\s*>/.test(l))) {
       const text = lines.map((l) => l.replace(/^\s*>\s?/, "")).join(" ").trim();
@@ -203,6 +209,69 @@
       return `<p class="apa-ref">${inline(text)}</p>\n`;
     }
     return `<p class="apa-p">${inline(text)}</p>\n`;
+  }
+
+  // ---------- tables (GFM + convención "Tabla:" / "Nota:") ----------
+
+  let apaTableCounter = 0;
+
+  function isTableSeparatorRow(line) {
+    return /^\s*\|?(\s*:?-{3,}:?\s*\|)+\s*:?-{3,}:?\s*\|?\s*$/.test(line || "");
+  }
+
+  function parseTableRow(line) {
+    return line
+      .trim()
+      .replace(/^\|/, "")
+      .replace(/\|$/, "")
+      .split("|")
+      .map((cell) => cell.trim());
+  }
+
+  function isTableBlock(lines) {
+    return lines.length >= 2 && lines[0].includes("|") && isTableSeparatorRow(lines[1]);
+  }
+
+  function tableBlockHtml(lines) {
+    const header = parseTableRow(lines[0]);
+    const rows = [];
+    let i = 2;
+    while (i < lines.length && lines[i].includes("|")) {
+      rows.push(parseTableRow(lines[i]));
+      i++;
+    }
+
+    let title = "";
+    let note = "";
+    if (i < lines.length && /^\s*(Tabla|Table)\s*:/i.test(lines[i])) {
+      title = lines[i].replace(/^\s*(Tabla|Table)\s*:/i, "").trim();
+      i++;
+    }
+    if (i < lines.length && /^\s*(Nota|Note)\s*:/i.test(lines[i])) {
+      note = lines[i].replace(/^\s*(Nota|Note)\s*:/i, "").trim();
+      i++;
+    }
+
+    return renderApaTable({ header, rows, title, note });
+  }
+
+  function renderApaTable({ header, rows, title, note }) {
+    apaTableCounter++;
+    const thead = `<tr>${header.map((h) => `<th>${inline(h)}</th>`).join("")}</tr>`;
+    const tbody = rows
+      .map((r) => `<tr>${r.map((c) => `<td>${inline(c)}</td>`).join("")}</tr>`)
+      .join("");
+
+    return `
+      <div class="apa-table-block">
+        <p class="apa-table-number">Tabla ${apaTableCounter}</p>
+        ${title ? `<p class="apa-table-title">${inline(title)}</p>` : ""}
+        <table class="apa-table">
+          <thead>${thead}</thead>
+          <tbody>${tbody}</tbody>
+        </table>
+        ${note ? `<p class="apa-table-note"><em>Nota.</em> ${inline(note)}</p>` : ""}
+      </div>\n`;
   }
 
   // ---------- title page ----------
@@ -328,6 +397,15 @@
         .apa-ref { text-indent: -0.5in; margin-left: 0.5in; text-align: left; }
         .apa-list { margin-left: 0.75in; }
         .apa-pagebreak { mso-special-character: pagebreak; break-before: page; border: none; }
+        .apa-table-block { margin-top: 24pt; page-break-inside: avoid; }
+        .apa-table-number { font-weight: bold; text-indent: 0; }
+        .apa-table-title { font-style: italic; text-indent: 0; margin-bottom: 6pt; }
+        .apa-table { width: 100%; border-collapse: collapse; font-size: 12pt; }
+        .apa-table th, .apa-table td { padding: 4pt 8pt; text-align: left; vertical-align: top; border: none; mso-border-alt: none; }
+        .apa-table thead tr { border-top: 1.5pt solid #000; border-bottom: 1pt solid #000; }
+        .apa-table tbody tr { border-bottom: none; }
+        .apa-table tbody tr:last-child { border-bottom: 1.5pt solid #000; }
+        .apa-table-note { font-size: 10.5pt; text-indent: 0; margin-top: 6pt; }
       </style>
       </head>
       <body>
@@ -365,6 +443,13 @@ Se revisaron 12 estudios publicados entre 2015 y 2024 en bases de datos indexada
 #### Criterios de inclusión
 
 Solo se consideraron estudios con muestras mayores a 100 participantes.
+
+| Estudio | Muestra | Horas de sueño |
+|---------|---------|-----------------|
+| Curcio et al. (2006) | 142 | 6.2 |
+| Walker (2017) | 310 | 7.1 |
+Tabla: Resumen de los estudios revisados
+Nota: Las horas de sueño corresponden al promedio reportado por los participantes.
 
 ## Resultados
 

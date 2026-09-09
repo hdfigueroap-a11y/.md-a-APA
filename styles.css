@@ -352,6 +352,48 @@ html, body {
 }
 .apa-list li { margin: 0; }
 
+/* tables — APA 7: solo bordes horizontales, nunca verticales */
+.apa-table-block {
+  margin: 24pt 0 0;
+  break-inside: avoid;
+}
+.apa-table-number {
+  font-weight: 700;
+  margin: 0;
+  text-indent: 0;
+}
+.apa-table-title {
+  font-style: italic;
+  margin: 0 0 6pt;
+  text-indent: 0;
+}
+.apa-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12pt;
+  line-height: 1.4;
+}
+.apa-table th,
+.apa-table td {
+  border: none;
+  padding: 4pt 8pt;
+  text-align: left;
+  vertical-align: top;
+}
+.apa-table thead tr {
+  border-top: 1.5pt solid #000;
+  border-bottom: 1pt solid #000;
+}
+.apa-table tbody tr:last-child {
+  border-bottom: 1.5pt solid #000;
+}
+.apa-table-note {
+  font-size: 10.5pt;
+  text-indent: 0;
+  margin-top: 6pt;
+  line-height: 1.4;
+}
+
 /* ---------- rules note ---------- */
 
 .rules-note {
@@ -402,4 +444,5 @@ html, body {
   .apa-pagebreak { page-break-after: always; border: none; }
   .apa-pagebreak::after { content: none; }
   .apa-refs-title { page-break-before: always; }
+  .apa-table-block { page-break-inside: avoid; }
 }

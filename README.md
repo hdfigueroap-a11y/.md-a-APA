@@ -14,6 +14,7 @@ Aplicación web (100% en el navegador, sin backend) que convierte un archivo `.m
   - Párrafos con sangría de primera línea de 0.5" e interlineado doble
   - Citas de 40 palabras o más se convierten automáticamente en cita en bloque (sin comillas, con sangría); las más cortas quedan en línea con comillas
   - Una sección `## Referencias` (o `References` / `Bibliografía`) activa el modo de sangría francesa: cada párrafo separado por una línea en blanco se trata como una referencia independiente
+  - Tablas en formato Markdown (GFM, con `|`) convertidas a formato APA 7: numeradas automáticamente («Tabla 1», «Tabla 2»...), con título en cursiva y nota al pie, y solo bordes horizontales (nunca verticales), como pide el manual
 - Vista previa en vivo, estilo "hoja de papel"
 - Exportación a `.doc` (se abre directamente en Microsoft Word, conservando fuente, márgenes e interlineado) y a PDF vía impresión del navegador
 - Sin dependencias externas ni build step: es HTML + CSS + JS puro
@@ -56,9 +57,24 @@ apa7-formatter/
 └── .gitignore
 ```
 
+## Tablas
+
+Usa la sintaxis estándar de tablas Markdown (GFM). Puedes agregar un título y una nota opcionales justo después de la tabla, sin línea en blanco entre medio:
+
+```markdown
+| Dispositivo | Interfaz | Dirección IP |
+|-------------|----------|---------------|
+| R1          | G0/1.1   | 192.168.1.1   |
+| S1          | VLAN 1   | 192.168.1.11  |
+Tabla: Direccionamiento IP de la práctica
+Nota: Todas las máscaras son /24 salvo la interfaz Loopback0.
+```
+
+`Tabla:` (o `Table:`) se convierte en el título en cursiva; `Nota:` (o `Note:`) se convierte en la nota al pie con el formato *Nota.* que exige APA 7. Las tablas se numeran automáticamente en el orden en que aparecen.
+
 ## Limitaciones conocidas
 
-- El parser de Markdown es intencionalmente simple (encabezados, negrita, cursiva, código en línea, listas, citas y párrafos). No soporta tablas, imágenes ni enlaces con sintaxis `[texto](url)`.
+- El parser de Markdown es intencionalmente simple (encabezados, negrita, cursiva, código en línea, listas, citas, tablas y párrafos). No soporta imágenes ni enlaces con sintaxis `[texto](url)`.
 - La numeración automática de página no se genera en la vista previa ni en el `.doc`; Word la agrega automáticamente al usar *Insertar → Número de página* tras abrir el archivo exportado.
 - Siempre revisa el resultado antes de entregar tu trabajo: esta herramienta automatiza el formato, no reemplaza la revisión de contenido ni de citas.
 
