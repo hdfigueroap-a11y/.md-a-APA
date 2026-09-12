@@ -2,7 +2,7 @@
 
 Aplicación web (100% en el navegador, sin backend) que convierte un archivo `.md` o texto pegado en un manuscrito formateado según el *Publication Manual of the American Psychological Association*, 7ma edición: portada, encabezados de 5 niveles, párrafos con sangría e interlineado doble, citas en bloque y referencias con sangría francesa. Exporta el resultado a Word (`.doc`) o a PDF (impresión del navegador).
 
-**[Ver demo →](#)** *(reemplaza este enlace por tu URL de GitHub Pages una vez publicado, ver más abajo)*
+**[Ver demo →](https://md-a-apa.vercel.app/)** 
 
 ## Características
 
