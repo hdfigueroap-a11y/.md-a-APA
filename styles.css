@@ -151,6 +151,19 @@ html, body {
   color: var(--ink);
 }
 
+.umb-fields {
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--hairline);
+}
+
+.umb-fields__hint {
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  margin: 4px 0 0;
+  line-height: 1.5;
+}
+
 /* ---------- toolbars / buttons ---------- */
 
 .input-toolbar, .output-toolbar {
@@ -292,6 +305,16 @@ html, body {
 }
 .apa-titlepage .apa-line { margin: 0; }
 .apa-titlepage .apa-spacer { height: 48px; }
+
+.apa-titlepage--umb {
+  border: 1px solid #000;
+  padding: 40px 32px;
+  max-width: 420px;
+  min-height: 0;
+  padding-top: 40px;
+}
+.apa-umb-bold { font-weight: 700; margin: 0; }
+.apa-spacer--lg { height: 72px; }
 
 .apa-pagebreak {
   border: none;

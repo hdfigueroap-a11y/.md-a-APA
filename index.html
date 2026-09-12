@@ -56,6 +56,31 @@
         <span class="meta-form__legend">Tipo de trabajo</span>
         <label class="radio"><input type="radio" name="paper-type" value="student" checked> Estudiante</label>
         <label class="radio"><input type="radio" name="paper-type" value="professional"> Profesional</label>
+        <label class="radio"><input type="radio" name="paper-type" value="umb"> UMB (Manuela Beltrán)</label>
+      </div>
+
+      <div id="umb-fields" class="umb-fields" hidden>
+        <div class="meta-form__grid">
+          <div class="meta-form__row">
+            <label for="f-doctype">Tipo de documento</label>
+            <input type="text" id="f-doctype" placeholder="Proyecto de investigación">
+          </div>
+          <div class="meta-form__row">
+            <label for="f-city">Ciudad</label>
+            <input type="text" id="f-city" placeholder="Bogotá D.C.">
+          </div>
+        </div>
+        <div class="meta-form__grid">
+          <div class="meta-form__row">
+            <label for="f-year">Año</label>
+            <input type="text" id="f-year" placeholder="2026">
+          </div>
+          <div class="meta-form__row">
+            <label for="f-instructor-role">Profesión o cargo del tutor (opcional)</label>
+            <input type="text" id="f-instructor-role" placeholder="Abogado">
+          </div>
+        </div>
+        <p class="umb-fields__hint">Esta portada usa el «Profesor(a)» de arriba como tutor del proyecto. El logo institucional no se genera automáticamente: insértalo en Word (Insertar → Imagen) en la parte superior de la portada, dentro del recuadro.</p>
       </div>
     </form>
 
@@ -107,7 +132,7 @@ recibirá sangría francesa automáticamente."></textarea>
     <details class="rules-note">
       <summary>Qué reglas de APA 7 se aplican automáticamente</summary>
       <ul>
-        <li>Portada con título, autor(a), afiliación, curso, docente y fecha (versión estudiante o profesional)</li>
+        <li>Portada con título, autor(a), afiliación, curso, docente y fecha (versión estudiante, profesional, o portada institucional UMB con recuadro y tutor)</li>
         <li>Interlineado doble y sangría de primera línea de 1.27 cm (0.5”) en párrafos</li>
         <li>El primer # de tu texto se usa como título de portada; de ## a ###### generan los 5 niveles de encabezado APA</li>
         <li>Tablas en formato Markdown (con |), numeradas automáticamente, con título en cursiva, solo bordes horizontales y nota opcional (usa una línea «Tabla: ...» y/o «Nota: ...» justo después de la tabla)</li>

@@ -7,7 +7,7 @@ Aplicación web (100% en el navegador, sin backend) que convierte un archivo `.m
 ## Características
 
 - Entrada de texto pegado o carga de un archivo `.md` / `.txt`
-- Formulario de portada: título, autor(a), afiliación, curso, docente, fecha, y elección entre versión **estudiante** o **profesional**
+- Formulario de portada: título, autor(a), afiliación, curso, docente, fecha, y elección entre versión **estudiante**, **profesional**, o **portada institucional UMB**
 - Motor de conversión de Markdown a HTML con las reglas de APA 7:
   - El primer `#` del documento se usa como título de portada (no aparece en el cuerpo)
   - `##` a `######` generan los 5 niveles de encabezado APA con su estilo exacto (centrado/izquierda, negrita/cursiva, en línea)
@@ -72,6 +72,12 @@ Nota: Todas las máscaras son /24 salvo la interfaz Loopback0.
 ```
 
 `Tabla:` (o `Table:`) se convierte en el título en cursiva; `Nota:` (o `Note:`) se convierte en la nota al pie con el formato *Nota.* que exige APA 7. Las tablas se numeran automáticamente en el orden en que aparecen.
+
+## Portada institucional UMB
+
+Al elegir **UMB (Manuela Beltrán)** como tipo de trabajo, la portada cambia al formato que exige la *Guía resumida APA 7ma edición* de la Biblioteca UMB: un recuadro con borde, título y autor(a) en negrita, el bloque del tutor («Tutor del proyecto de investigación» + nombre + profesión/cargo opcional), y el bloque final con el nombre de la universidad, el tipo de documento (por ejemplo, «Proyecto de investigación» o «Trabajo de grado»), la ciudad y el año. El campo «Profesor(a)» del formulario se usa como el nombre del tutor.
+
+El logo institucional no se genera automáticamente (esta herramienta no maneja imágenes): después de exportar a Word, insértalo manualmente en la parte superior del recuadro con *Insertar → Imagen*.
 
 ## Bloques de código
 

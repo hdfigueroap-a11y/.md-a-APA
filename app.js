@@ -22,6 +22,12 @@
     course: document.getElementById("f-course"),
     instructor: document.getElementById("f-instructor"),
     date: document.getElementById("f-date"),
+    docType: document.getElementById("f-doctype"),
+    city: document.getElementById("f-city"),
+    year: document.getElementById("f-year"),
+    instructorRole: document.getElementById("f-instructor-role"),
+    umbFields: document.getElementById("umb-fields"),
+    paperTypeRadios: document.querySelectorAll('input[name="paper-type"]'),
     mdInput: document.getElementById("md-input"),
     fileInput: document.getElementById("file-input"),
     btnSample: document.getElementById("btn-sample"),
@@ -323,7 +329,7 @@
   // ---------- title page ----------
 
   function titlePageHtml(meta) {
-    const rows = [meta.title];
+    if (meta.paperType === "umb") return umbTitlePageHtml(meta);
     return `
       <div class="apa-titlepage">
         <p class="apa-line apa-title">${escapeHtml(meta.title || "Título del trabajo")}</p>
@@ -333,6 +339,29 @@
         <p class="apa-line">${escapeHtml(meta.course || "Curso")}</p>
         <p class="apa-line">${escapeHtml(meta.instructor || "Nombre del profesor o profesora")}</p>
         <p class="apa-line">${escapeHtml(meta.date || "Fecha de entrega")}</p>
+      </div>
+    `;
+  }
+
+  // Portada institucional UMB: título y autor en negrita, tutor del
+  // proyecto, y bloque final (universidad / tipo de documento / ciudad /
+  // año), todo dentro de un recuadro, según la Guía resumida APA 7ma
+  // edición de la Biblioteca UMB.
+  function umbTitlePageHtml(meta) {
+    return `
+      <div class="apa-titlepage apa-titlepage--umb">
+        <p class="apa-line apa-umb-bold">${escapeHtml(meta.title || "Título del trabajo")}</p>
+        <div class="apa-spacer"></div>
+        <p class="apa-line apa-umb-bold">${escapeHtml(meta.author || "Nombre del autor o autora")}</p>
+        <div class="apa-spacer apa-spacer--lg"></div>
+        <p class="apa-line">Tutor del proyecto de investigación</p>
+        <p class="apa-line apa-umb-bold">${escapeHtml(meta.instructor || "Nombre del tutor o tutora")}</p>
+        ${meta.instructorRole ? `<p class="apa-line">${escapeHtml(meta.instructorRole)}</p>` : ""}
+        <div class="apa-spacer apa-spacer--lg"></div>
+        <p class="apa-line apa-umb-bold">Universidad Manuela Beltrán</p>
+        <p class="apa-line">${escapeHtml(meta.docType || "Proyecto de investigación")}</p>
+        <p class="apa-line">${escapeHtml(meta.city || "Bogotá D.C.")}</p>
+        <p class="apa-line">${escapeHtml(meta.year || String(new Date().getFullYear()))}</p>
       </div>
     `;
   }
@@ -348,6 +377,10 @@
       course: els.course.value.trim(),
       instructor: els.instructor.value.trim(),
       date: els.date.value.trim(),
+      docType: els.docType.value.trim(),
+      city: els.city.value.trim(),
+      year: els.year.value.trim(),
+      instructorRole: els.instructorRole.value.trim(),
       paperType,
     };
   }
@@ -432,6 +465,9 @@
         .apa-titlepage { text-align: center; }
         .apa-title { font-weight: bold; }
         .apa-spacer { height: 48pt; }
+        .apa-titlepage--umb { border: 1pt solid #000; padding: 40pt 32pt; }
+        .apa-umb-bold { font-weight: bold; }
+        .apa-spacer--lg { height: 72pt; }
         .apa-h1 { text-align: center; font-weight: bold; }
         .apa-h2 { text-align: left; font-weight: bold; }
         .apa-h3 { text-align: left; font-weight: bold; font-style: italic; }
@@ -522,6 +558,13 @@ Curcio, G., Ferrara, M., & De Gennaro, L. (2006). Sleep loss, learning capacity 
   // ---------- events ----------
 
   els.mdInput.addEventListener("input", updateWordCount);
+
+  els.paperTypeRadios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      els.umbFields.hidden = document.querySelector('input[name="paper-type"]:checked').value !== "umb";
+      render();
+    });
+  });
 
   els.btnSample.addEventListener("click", () => {
     els.mdInput.value = SAMPLE;
